@@ -1,0 +1,196 @@
+// Starter spec, read from the code and traces by portal (no AI).
+// It says what exists. Add what the code can't: domains, your names,
+// rules, and what you plan to build.
+// Conventions: https://portal.haris-d21.workers.dev/skills/portal-architecture/SKILL.md
+model {
+  system = domain 'eShop' {
+    redis = datastore 'redis' {  // src/eShop.AppHost/AppHost.cs:8
+      technology 'Redis'
+      metadata {
+        resource 'redis'
+      }
+    }
+    eventbus = event 'eventbus' {  // src/eShop.AppHost/AppHost.cs:9
+      technology 'RabbitMQ'
+      metadata {
+        resource 'eventbus'
+      }
+    }
+    postgres = datastore 'postgres' {  // src/eShop.AppHost/AppHost.cs:11
+      technology 'PostgreSQL'
+      metadata {
+        resource 'postgres'
+      }
+    }
+    identity_api = service 'identity-api' {  // src/eShop.AppHost/AppHost.cs:24
+      technology 'C# · ASP.NET Core'
+      metadata {
+        code 'src/Identity.API/**'
+        otel_service 'identity-api'
+        resource 'identity-api'
+      }
+    }
+    basket_api = service 'basket-api' {  // src/eShop.AppHost/AppHost.cs:31
+      technology 'C# · gRPC · REST'
+      metadata {
+        code 'src/Basket.API/**'
+        otel_service 'basket-api'
+        resource 'basket-api'
+      }
+      eShop_ServiceDefaults = component 'eShop.ServiceDefaults' {
+        metadata {
+          code 'src/eShop.ServiceDefaults/**'
+        }
+      }
+      EventBus = component 'EventBus' {
+        metadata {
+          code 'src/EventBus/**'
+        }
+      }
+      EventBusRabbitMQ = component 'EventBusRabbitMQ' {
+        metadata {
+          code 'src/EventBusRabbitMQ/**'
+        }
+      }
+    }
+    catalog_api = service 'catalog-api' {  // src/eShop.AppHost/AppHost.cs:37
+      technology 'C# · REST'
+      metadata {
+        code 'src/Catalog.API/**'
+        otel_service 'catalog-api'
+        resource 'catalog-api'
+      }
+      IntegrationEventLogEF = component 'IntegrationEventLogEF' {
+        metadata {
+          code 'src/IntegrationEventLogEF/**'
+        }
+      }
+    }
+    ordering_api = service 'ordering-api' {  // src/eShop.AppHost/AppHost.cs:41
+      technology 'C# · REST'
+      metadata {
+        code 'src/Ordering.API/**'
+        otel_service 'ordering-api'
+        resource 'ordering-api'
+      }
+      Ordering_Domain = component 'Ordering.Domain' {
+        metadata {
+          code 'src/Ordering.Domain/**'
+        }
+      }
+      Ordering_Infrastructure = component 'Ordering.Infrastructure' {
+        metadata {
+          code 'src/Ordering.Infrastructure/**'
+        }
+      }
+    }
+    order_processor = service 'order-processor' {  // src/eShop.AppHost/AppHost.cs:47
+      technology 'C#'
+      metadata {
+        code 'src/OrderProcessor/**'
+        otel_service 'order-processor'
+        resource 'order-processor'
+      }
+    }
+    payment_processor = service 'payment-processor' {  // src/eShop.AppHost/AppHost.cs:52
+      technology 'C#'
+      metadata {
+        code 'src/PaymentProcessor/**'
+        otel_service 'payment-processor'
+        resource 'payment-processor'
+      }
+    }
+    webhooks_api = service 'webhooks-api' {  // src/eShop.AppHost/AppHost.cs:55
+      technology 'C# · REST'
+      metadata {
+        code 'src/Webhooks.API/**'
+        otel_service 'webhooks-api'
+        resource 'webhooks-api'
+      }
+    }
+    mobile_bff = service 'mobile-bff' {  // src/eShop.AppHost/AppHost.cs:61
+      technology 'YARP proxy'
+      metadata {
+        otel_service 'mobile-bff'
+        resource 'mobile-bff'
+      }
+    }
+    webhooksclient = service 'webhooksclient' {  // src/eShop.AppHost/AppHost.cs:66
+      technology 'C# · ASP.NET Core · REST'
+      metadata {
+        code 'src/WebhookClient/**'
+        otel_service 'webhooksclient'
+        resource 'webhooksclient'
+      }
+    }
+    webapp = service 'webapp' {  // src/eShop.AppHost/AppHost.cs:70
+      technology 'C# · ASP.NET Core'
+      metadata {
+        code 'src/WebApp/**'
+        otel_service 'webapp'
+        resource 'webapp'
+      }
+    }
+    ClientApp = service 'ClientApp' {  // src/ClientApp/ClientApp.csproj:1
+      technology 'C# · gRPC'
+      metadata {
+        code 'src/ClientApp/**'
+        otel_service 'ClientApp'
+        resource 'ClientApp'
+      }
+    }
+    HybridApp = service 'HybridApp' {  // src/HybridApp/HybridApp.csproj:1
+      technology 'C# · ASP.NET Core'
+      metadata {
+        code 'src/HybridApp/**'
+        otel_service 'HybridApp'
+        resource 'HybridApp'
+      }
+      WebAppComponents = component 'WebAppComponents' {
+        metadata {
+          code 'src/WebAppComponents/**'
+        }
+      }
+    }
+  }
+
+  identity_api -> postgres  // reads or writes? say which: -[reads]-> or -[writes]->
+  basket_api -> redis  // reads or writes? say which: -[reads]-> or -[writes]->
+  basket_api -> eventbus
+  basket_api -[request]-> identity_api
+  catalog_api -> eventbus
+  catalog_api -> postgres  // reads or writes? say which: -[reads]-> or -[writes]->
+  ordering_api -> eventbus
+  ordering_api -> postgres  // reads or writes? say which: -[reads]-> or -[writes]->
+  ordering_api -[request]-> identity_api
+  order_processor -> eventbus
+  order_processor -> postgres  // reads or writes? say which: -[reads]-> or -[writes]->
+  payment_processor -> eventbus
+  webhooks_api -> eventbus
+  webhooks_api -> postgres  // reads or writes? say which: -[reads]-> or -[writes]->
+  webhooks_api -[request]-> identity_api
+  mobile_bff -[request]-> catalog_api
+  mobile_bff -[request]-> ordering_api
+  mobile_bff -[request]-> identity_api
+  webhooksclient -[request]-> webhooks_api
+  webhooksclient -[request]-> identity_api
+  webapp -[request]-> basket_api
+  webapp -[request]-> catalog_api
+  webapp -[request]-> ordering_api
+  webapp -> eventbus
+  webapp -[request]-> identity_api
+}
+
+specification {
+  element domain
+  element service
+  element event
+  element datastore
+  element infra
+  element component
+  relationship request
+  relationship publishes
+  relationship consumes
+  relationship reads
+  relationship writes
+}
