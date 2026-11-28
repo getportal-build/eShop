@@ -29,31 +29,6 @@ model {
         otel_service 'identity-api'
         resource 'identity-api'
       }
-      Configuration = component 'Configuration' {
-        metadata {
-          code 'src/Identity.API/Configuration/**'
-        }
-      }
-      Data = component 'Data' {
-        metadata {
-          code 'src/Identity.API/Data/**'
-        }
-      }
-      Models_2 = component 'Models' {
-        metadata {
-          code 'src/Identity.API/Models/**'
-        }
-      }
-      Quickstart = component 'Quickstart' {
-        metadata {
-          code 'src/Identity.API/Quickstart/**'
-        }
-      }
-      Services_4 = component 'Services' {
-        metadata {
-          code 'src/Identity.API/Services/**'
-        }
-      }
     }
     basket_api = service 'basket-api' {  // src/eShop.AppHost/AppHost.cs:31
       technology 'C# · gRPC · REST'
@@ -61,31 +36,6 @@ model {
         code 'src/Basket.API/**'
         otel_service 'basket-api'
         resource 'basket-api'
-      }
-      Extensions = component 'Extensions' {
-        metadata {
-          code 'src/Basket.API/Extensions/**'
-        }
-      }
-      Grpc = component 'Grpc' {
-        metadata {
-          code 'src/Basket.API/Grpc/**'
-        }
-      }
-      IntegrationEvents = component 'IntegrationEvents' {
-        metadata {
-          code 'src/Basket.API/IntegrationEvents/**'
-        }
-      }
-      Model = component 'Model' {
-        metadata {
-          code 'src/Basket.API/Model/**'
-        }
-      }
-      Repositories = component 'Repositories' {
-        metadata {
-          code 'src/Basket.API/Repositories/**'
-        }
       }
       eShop_ServiceDefaults = component 'eShop.ServiceDefaults' {
         metadata {
@@ -110,36 +60,6 @@ model {
         otel_service 'catalog-api'
         resource 'catalog-api'
       }
-      Apis = component 'Apis' {
-        metadata {
-          code 'src/Catalog.API/Apis/**'
-        }
-      }
-      Extensions_2 = component 'Extensions' {
-        metadata {
-          code 'src/Catalog.API/Extensions/**'
-        }
-      }
-      Infrastructure = component 'Infrastructure' {
-        metadata {
-          code 'src/Catalog.API/Infrastructure/**'
-        }
-      }
-      IntegrationEvents_2 = component 'IntegrationEvents' {
-        metadata {
-          code 'src/Catalog.API/IntegrationEvents/**'
-        }
-      }
-      Model_2 = component 'Model' {
-        metadata {
-          code 'src/Catalog.API/Model/**'
-        }
-      }
-      Services = component 'Services' {
-        metadata {
-          code 'src/Catalog.API/Services/**'
-        }
-      }
       IntegrationEventLogEF = component 'IntegrationEventLogEF' {
         metadata {
           code 'src/IntegrationEventLogEF/**'
@@ -152,26 +72,6 @@ model {
         code 'src/Ordering.API/**'
         otel_service 'ordering-api'
         resource 'ordering-api'
-      }
-      Apis_2 = component 'Apis' {
-        metadata {
-          code 'src/Ordering.API/Apis/**'
-        }
-      }
-      Application = component 'Application' {
-        metadata {
-          code 'src/Ordering.API/Application/**'
-        }
-      }
-      Extensions_4 = component 'Extensions' {
-        metadata {
-          code 'src/Ordering.API/Extensions/**'
-        }
-      }
-      Infrastructure_2 = component 'Infrastructure' {
-        metadata {
-          code 'src/Ordering.API/Infrastructure/**'
-        }
       }
       Ordering_Domain = component 'Ordering.Domain' {
         metadata {
@@ -191,21 +91,6 @@ model {
         otel_service 'order-processor'
         resource 'order-processor'
       }
-      Events = component 'Events' {
-        metadata {
-          code 'src/OrderProcessor/Events/**'
-        }
-      }
-      Extensions_5 = component 'Extensions' {
-        metadata {
-          code 'src/OrderProcessor/Extensions/**'
-        }
-      }
-      Services_5 = component 'Services' {
-        metadata {
-          code 'src/OrderProcessor/Services/**'
-        }
-      }
     }
     payment_processor = service 'payment-processor' {  // src/eShop.AppHost/AppHost.cs:52
       technology 'C#'
@@ -222,46 +107,6 @@ model {
         otel_service 'webhooks-api'
         resource 'webhooks-api'
       }
-      Apis_3 = component 'Apis' {
-        metadata {
-          code 'src/Webhooks.API/Apis/**'
-        }
-      }
-      Exceptions = component 'Exceptions' {
-        metadata {
-          code 'src/Webhooks.API/Exceptions/**'
-        }
-      }
-      Extensions_8 = component 'Extensions' {
-        metadata {
-          code 'src/Webhooks.API/Extensions/**'
-        }
-      }
-      Infrastructure_3 = component 'Infrastructure' {
-        metadata {
-          code 'src/Webhooks.API/Infrastructure/**'
-        }
-      }
-      IntegrationEvents_3 = component 'IntegrationEvents' {
-        metadata {
-          code 'src/Webhooks.API/IntegrationEvents/**'
-        }
-      }
-      Migrations = component 'Migrations' {
-        metadata {
-          code 'src/Webhooks.API/Migrations/**'
-        }
-      }
-      Model_3 = component 'Model' {
-        metadata {
-          code 'src/Webhooks.API/Model/**'
-        }
-      }
-      Services_8 = component 'Services' {
-        metadata {
-          code 'src/Webhooks.API/Services/**'
-        }
-      }
     }
     mobile_bff = service 'mobile-bff' {  // src/eShop.AppHost/AppHost.cs:61
       technology 'YARP proxy'
@@ -277,21 +122,6 @@ model {
         otel_service 'webhooksclient'
         resource 'webhooksclient'
       }
-      Endpoints = component 'Endpoints' {
-        metadata {
-          code 'src/WebhookClient/Endpoints/**'
-        }
-      }
-      Extensions_7 = component 'Extensions' {
-        metadata {
-          code 'src/WebhookClient/Extensions/**'
-        }
-      }
-      Services_7 = component 'Services' {
-        metadata {
-          code 'src/WebhookClient/Services/**'
-        }
-      }
     }
     webapp = service 'webapp' {  // src/eShop.AppHost/AppHost.cs:70
       technology 'C# · ASP.NET Core'
@@ -299,21 +129,6 @@ model {
         code 'src/WebApp/**'
         otel_service 'webapp'
         resource 'webapp'
-      }
-      Components = component 'Components' {
-        metadata {
-          code 'src/WebApp/Components/**'
-        }
-      }
-      Extensions_6 = component 'Extensions' {
-        metadata {
-          code 'src/WebApp/Extensions/**'
-        }
-      }
-      Services_6 = component 'Services' {
-        metadata {
-          code 'src/WebApp/Services/**'
-        }
       }
     }
     ClientApp = service 'ClientApp' {  // src/ClientApp/ClientApp.csproj:1
@@ -323,66 +138,6 @@ model {
         otel_service 'ClientApp'
         resource 'ClientApp'
       }
-      Animations = component 'Animations' {
-        metadata {
-          code 'src/ClientApp/Animations/**'
-        }
-      }
-      Controls = component 'Controls' {
-        metadata {
-          code 'src/ClientApp/Controls/**'
-        }
-      }
-      Converters = component 'Converters' {
-        metadata {
-          code 'src/ClientApp/Converters/**'
-        }
-      }
-      Effects = component 'Effects' {
-        metadata {
-          code 'src/ClientApp/Effects/**'
-        }
-      }
-      Extensions_3 = component 'Extensions' {
-        metadata {
-          code 'src/ClientApp/Extensions/**'
-        }
-      }
-      Helpers = component 'Helpers' {
-        metadata {
-          code 'src/ClientApp/Helpers/**'
-        }
-      }
-      Models = component 'Models' {
-        metadata {
-          code 'src/ClientApp/Models/**'
-        }
-      }
-      Platforms = component 'Platforms' {
-        metadata {
-          code 'src/ClientApp/Platforms/**'
-        }
-      }
-      Services_2 = component 'Services' {
-        metadata {
-          code 'src/ClientApp/Services/**'
-        }
-      }
-      Validations = component 'Validations' {
-        metadata {
-          code 'src/ClientApp/Validations/**'
-        }
-      }
-      ViewModels = component 'ViewModels' {
-        metadata {
-          code 'src/ClientApp/ViewModels/**'
-        }
-      }
-      Views = component 'Views' {
-        metadata {
-          code 'src/ClientApp/Views/**'
-        }
-      }
     }
     HybridApp = service 'HybridApp' {  // src/HybridApp/HybridApp.csproj:1
       technology 'C# · ASP.NET Core'
@@ -390,16 +145,6 @@ model {
         code 'src/HybridApp/**'
         otel_service 'HybridApp'
         resource 'HybridApp'
-      }
-      Platforms_2 = component 'Platforms' {
-        metadata {
-          code 'src/HybridApp/Platforms/**'
-        }
-      }
-      Services_3 = component 'Services' {
-        metadata {
-          code 'src/HybridApp/Services/**'
-        }
       }
       WebAppComponents = component 'WebAppComponents' {
         metadata {
