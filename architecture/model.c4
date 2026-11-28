@@ -1,0 +1,451 @@
+// Starter spec, read from the code and traces by portal (no AI).
+// It says what exists. Add what the code can't: domains, your names,
+// rules, and what you plan to build.
+// Conventions: https://portal.haris-d21.workers.dev/skills/portal-architecture/SKILL.md
+model {
+  system = domain 'eShop' {
+    redis = datastore 'redis' {  // src/eShop.AppHost/AppHost.cs:8
+      technology 'Redis'
+      metadata {
+        resource 'redis'
+      }
+    }
+    eventbus = event 'eventbus' {  // src/eShop.AppHost/AppHost.cs:9
+      technology 'RabbitMQ'
+      metadata {
+        resource 'eventbus'
+      }
+    }
+    postgres = datastore 'postgres' {  // src/eShop.AppHost/AppHost.cs:11
+      technology 'PostgreSQL'
+      metadata {
+        resource 'postgres'
+      }
+    }
+    identity_api = service 'identity-api' {  // src/eShop.AppHost/AppHost.cs:24
+      technology 'C# · ASP.NET Core'
+      metadata {
+        code 'src/Identity.API/**'
+        otel_service 'identity-api'
+        resource 'identity-api'
+      }
+      Configuration = component 'Configuration' {
+        metadata {
+          code 'src/Identity.API/Configuration/**'
+        }
+      }
+      Data = component 'Data' {
+        metadata {
+          code 'src/Identity.API/Data/**'
+        }
+      }
+      Models_2 = component 'Models' {
+        metadata {
+          code 'src/Identity.API/Models/**'
+        }
+      }
+      Quickstart = component 'Quickstart' {
+        metadata {
+          code 'src/Identity.API/Quickstart/**'
+        }
+      }
+      Services_4 = component 'Services' {
+        metadata {
+          code 'src/Identity.API/Services/**'
+        }
+      }
+    }
+    basket_api = service 'basket-api' {  // src/eShop.AppHost/AppHost.cs:31
+      technology 'C# · gRPC · REST'
+      metadata {
+        code 'src/Basket.API/**'
+        otel_service 'basket-api'
+        resource 'basket-api'
+      }
+      Extensions = component 'Extensions' {
+        metadata {
+          code 'src/Basket.API/Extensions/**'
+        }
+      }
+      Grpc = component 'Grpc' {
+        metadata {
+          code 'src/Basket.API/Grpc/**'
+        }
+      }
+      IntegrationEvents = component 'IntegrationEvents' {
+        metadata {
+          code 'src/Basket.API/IntegrationEvents/**'
+        }
+      }
+      Model = component 'Model' {
+        metadata {
+          code 'src/Basket.API/Model/**'
+        }
+      }
+      Repositories = component 'Repositories' {
+        metadata {
+          code 'src/Basket.API/Repositories/**'
+        }
+      }
+      eShop_ServiceDefaults = component 'eShop.ServiceDefaults' {
+        metadata {
+          code 'src/eShop.ServiceDefaults/**'
+        }
+      }
+      EventBus = component 'EventBus' {
+        metadata {
+          code 'src/EventBus/**'
+        }
+      }
+      EventBusRabbitMQ = component 'EventBusRabbitMQ' {
+        metadata {
+          code 'src/EventBusRabbitMQ/**'
+        }
+      }
+    }
+    catalog_api = service 'catalog-api' {  // src/eShop.AppHost/AppHost.cs:37
+      technology 'C# · REST'
+      metadata {
+        code 'src/Catalog.API/**'
+        otel_service 'catalog-api'
+        resource 'catalog-api'
+      }
+      Apis = component 'Apis' {
+        metadata {
+          code 'src/Catalog.API/Apis/**'
+        }
+      }
+      Extensions_2 = component 'Extensions' {
+        metadata {
+          code 'src/Catalog.API/Extensions/**'
+        }
+      }
+      Infrastructure = component 'Infrastructure' {
+        metadata {
+          code 'src/Catalog.API/Infrastructure/**'
+        }
+      }
+      IntegrationEvents_2 = component 'IntegrationEvents' {
+        metadata {
+          code 'src/Catalog.API/IntegrationEvents/**'
+        }
+      }
+      Model_2 = component 'Model' {
+        metadata {
+          code 'src/Catalog.API/Model/**'
+        }
+      }
+      Services = component 'Services' {
+        metadata {
+          code 'src/Catalog.API/Services/**'
+        }
+      }
+      IntegrationEventLogEF = component 'IntegrationEventLogEF' {
+        metadata {
+          code 'src/IntegrationEventLogEF/**'
+        }
+      }
+    }
+    ordering_api = service 'ordering-api' {  // src/eShop.AppHost/AppHost.cs:41
+      technology 'C# · REST'
+      metadata {
+        code 'src/Ordering.API/**'
+        otel_service 'ordering-api'
+        resource 'ordering-api'
+      }
+      Apis_2 = component 'Apis' {
+        metadata {
+          code 'src/Ordering.API/Apis/**'
+        }
+      }
+      Application = component 'Application' {
+        metadata {
+          code 'src/Ordering.API/Application/**'
+        }
+      }
+      Extensions_4 = component 'Extensions' {
+        metadata {
+          code 'src/Ordering.API/Extensions/**'
+        }
+      }
+      Infrastructure_2 = component 'Infrastructure' {
+        metadata {
+          code 'src/Ordering.API/Infrastructure/**'
+        }
+      }
+      Ordering_Domain = component 'Ordering.Domain' {
+        metadata {
+          code 'src/Ordering.Domain/**'
+        }
+      }
+      Ordering_Infrastructure = component 'Ordering.Infrastructure' {
+        metadata {
+          code 'src/Ordering.Infrastructure/**'
+        }
+      }
+    }
+    order_processor = service 'order-processor' {  // src/eShop.AppHost/AppHost.cs:47
+      technology 'C#'
+      metadata {
+        code 'src/OrderProcessor/**'
+        otel_service 'order-processor'
+        resource 'order-processor'
+      }
+      Events = component 'Events' {
+        metadata {
+          code 'src/OrderProcessor/Events/**'
+        }
+      }
+      Extensions_5 = component 'Extensions' {
+        metadata {
+          code 'src/OrderProcessor/Extensions/**'
+        }
+      }
+      Services_5 = component 'Services' {
+        metadata {
+          code 'src/OrderProcessor/Services/**'
+        }
+      }
+    }
+    payment_processor = service 'payment-processor' {  // src/eShop.AppHost/AppHost.cs:52
+      technology 'C#'
+      metadata {
+        code 'src/PaymentProcessor/**'
+        otel_service 'payment-processor'
+        resource 'payment-processor'
+      }
+    }
+    webhooks_api = service 'webhooks-api' {  // src/eShop.AppHost/AppHost.cs:55
+      technology 'C# · REST'
+      metadata {
+        code 'src/Webhooks.API/**'
+        otel_service 'webhooks-api'
+        resource 'webhooks-api'
+      }
+      Apis_3 = component 'Apis' {
+        metadata {
+          code 'src/Webhooks.API/Apis/**'
+        }
+      }
+      Exceptions = component 'Exceptions' {
+        metadata {
+          code 'src/Webhooks.API/Exceptions/**'
+        }
+      }
+      Extensions_8 = component 'Extensions' {
+        metadata {
+          code 'src/Webhooks.API/Extensions/**'
+        }
+      }
+      Infrastructure_3 = component 'Infrastructure' {
+        metadata {
+          code 'src/Webhooks.API/Infrastructure/**'
+        }
+      }
+      IntegrationEvents_3 = component 'IntegrationEvents' {
+        metadata {
+          code 'src/Webhooks.API/IntegrationEvents/**'
+        }
+      }
+      Migrations = component 'Migrations' {
+        metadata {
+          code 'src/Webhooks.API/Migrations/**'
+        }
+      }
+      Model_3 = component 'Model' {
+        metadata {
+          code 'src/Webhooks.API/Model/**'
+        }
+      }
+      Services_8 = component 'Services' {
+        metadata {
+          code 'src/Webhooks.API/Services/**'
+        }
+      }
+    }
+    mobile_bff = service 'mobile-bff' {  // src/eShop.AppHost/AppHost.cs:61
+      technology 'YARP proxy'
+      metadata {
+        otel_service 'mobile-bff'
+        resource 'mobile-bff'
+      }
+    }
+    webhooksclient = service 'webhooksclient' {  // src/eShop.AppHost/AppHost.cs:66
+      technology 'C# · ASP.NET Core · REST'
+      metadata {
+        code 'src/WebhookClient/**'
+        otel_service 'webhooksclient'
+        resource 'webhooksclient'
+      }
+      Endpoints = component 'Endpoints' {
+        metadata {
+          code 'src/WebhookClient/Endpoints/**'
+        }
+      }
+      Extensions_7 = component 'Extensions' {
+        metadata {
+          code 'src/WebhookClient/Extensions/**'
+        }
+      }
+      Services_7 = component 'Services' {
+        metadata {
+          code 'src/WebhookClient/Services/**'
+        }
+      }
+    }
+    webapp = service 'webapp' {  // src/eShop.AppHost/AppHost.cs:70
+      technology 'C# · ASP.NET Core'
+      metadata {
+        code 'src/WebApp/**'
+        otel_service 'webapp'
+        resource 'webapp'
+      }
+      Components = component 'Components' {
+        metadata {
+          code 'src/WebApp/Components/**'
+        }
+      }
+      Extensions_6 = component 'Extensions' {
+        metadata {
+          code 'src/WebApp/Extensions/**'
+        }
+      }
+      Services_6 = component 'Services' {
+        metadata {
+          code 'src/WebApp/Services/**'
+        }
+      }
+    }
+    ClientApp = service 'ClientApp' {  // src/ClientApp/ClientApp.csproj:1
+      technology 'C# · gRPC'
+      metadata {
+        code 'src/ClientApp/**'
+        otel_service 'ClientApp'
+        resource 'ClientApp'
+      }
+      Animations = component 'Animations' {
+        metadata {
+          code 'src/ClientApp/Animations/**'
+        }
+      }
+      Controls = component 'Controls' {
+        metadata {
+          code 'src/ClientApp/Controls/**'
+        }
+      }
+      Converters = component 'Converters' {
+        metadata {
+          code 'src/ClientApp/Converters/**'
+        }
+      }
+      Effects = component 'Effects' {
+        metadata {
+          code 'src/ClientApp/Effects/**'
+        }
+      }
+      Extensions_3 = component 'Extensions' {
+        metadata {
+          code 'src/ClientApp/Extensions/**'
+        }
+      }
+      Helpers = component 'Helpers' {
+        metadata {
+          code 'src/ClientApp/Helpers/**'
+        }
+      }
+      Models = component 'Models' {
+        metadata {
+          code 'src/ClientApp/Models/**'
+        }
+      }
+      Platforms = component 'Platforms' {
+        metadata {
+          code 'src/ClientApp/Platforms/**'
+        }
+      }
+      Services_2 = component 'Services' {
+        metadata {
+          code 'src/ClientApp/Services/**'
+        }
+      }
+      Validations = component 'Validations' {
+        metadata {
+          code 'src/ClientApp/Validations/**'
+        }
+      }
+      ViewModels = component 'ViewModels' {
+        metadata {
+          code 'src/ClientApp/ViewModels/**'
+        }
+      }
+      Views = component 'Views' {
+        metadata {
+          code 'src/ClientApp/Views/**'
+        }
+      }
+    }
+    HybridApp = service 'HybridApp' {  // src/HybridApp/HybridApp.csproj:1
+      technology 'C# · ASP.NET Core'
+      metadata {
+        code 'src/HybridApp/**'
+        otel_service 'HybridApp'
+        resource 'HybridApp'
+      }
+      Platforms_2 = component 'Platforms' {
+        metadata {
+          code 'src/HybridApp/Platforms/**'
+        }
+      }
+      Services_3 = component 'Services' {
+        metadata {
+          code 'src/HybridApp/Services/**'
+        }
+      }
+      WebAppComponents = component 'WebAppComponents' {
+        metadata {
+          code 'src/WebAppComponents/**'
+        }
+      }
+    }
+  }
+
+  identity_api -> postgres  // reads or writes? say which: -[reads]-> or -[writes]->
+  basket_api -> redis  // reads or writes? say which: -[reads]-> or -[writes]->
+  basket_api -> eventbus
+  basket_api -[request]-> identity_api
+  catalog_api -> eventbus
+  catalog_api -> postgres  // reads or writes? say which: -[reads]-> or -[writes]->
+  ordering_api -> eventbus
+  ordering_api -> postgres  // reads or writes? say which: -[reads]-> or -[writes]->
+  ordering_api -[request]-> identity_api
+  order_processor -> eventbus
+  order_processor -> postgres  // reads or writes? say which: -[reads]-> or -[writes]->
+  payment_processor -> eventbus
+  webhooks_api -> eventbus
+  webhooks_api -> postgres  // reads or writes? say which: -[reads]-> or -[writes]->
+  webhooks_api -[request]-> identity_api
+  mobile_bff -[request]-> catalog_api
+  mobile_bff -[request]-> ordering_api
+  mobile_bff -[request]-> identity_api
+  webhooksclient -[request]-> webhooks_api
+  webhooksclient -[request]-> identity_api
+  webapp -[request]-> basket_api
+  webapp -[request]-> catalog_api
+  webapp -[request]-> ordering_api
+  webapp -> eventbus
+  webapp -[request]-> identity_api
+}
+
+specification {
+  element domain
+  element service
+  element event
+  element datastore
+  element infra
+  element component
+  relationship request
+  relationship publishes
+  relationship consumes
+  relationship reads
+  relationship writes
+}
